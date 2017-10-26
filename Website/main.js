@@ -17,11 +17,13 @@ function getPeople() {
 	    redirect: 'follow',
 	    headers: headers
 	}).then(resp => {
+		console.log("Response!");
 		return resp.json();
 	}).then(p => {
 		for (var key in p) {
 			if (p.hasOwnProperty(key)) {
-				addPerson(key, p[key]);
+				addPerson(key, p[key][0], p[key][1]);
+				console.log(key, p[key][0], p[key][1]);
 			}
 		}
 	}).catch(err => {
@@ -92,7 +94,7 @@ function addPoint(name) {
 }
 
 //Function to add a new person to the table!
-function addPerson(name, age) {
+function addPerson(name, age, points) {
 	// Find a <table> element with id="myTable":
 	var table = document.getElementById("table");
 
@@ -110,7 +112,7 @@ function addPerson(name, age) {
 	// Add some text to the new cells:
 	cell1.innerHTML = name;
 	cell2.innerHTML = age;
-	cell3.innerHTML = 0;
+	cell3.innerHTML = points;
 	cell4.innerHTML = "<center><button onclick='addPoint(\""+name+"\")'>Add Point</button><button onclick='removePerson(\""+name+"\", \""+age+"\")'>Delete</button></center>";
 }
 
